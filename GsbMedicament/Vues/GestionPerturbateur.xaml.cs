@@ -28,12 +28,14 @@ namespace GsbMedicament.Vues
 
         GstBdd gst;
 
+        //Générer la liste des médicaments
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();
             lstMedicaments.ItemsSource = gst.getAllMedicaments();
         }
 
+        //Bouton d'ajout d'un médicament à la liste des médicaments perturbateurs depuis la liste des médicaments non pertubateurs
         private void btnAjouterMedicament_Click(object sender, RoutedEventArgs e)
         {
             if (lstMedicaments.SelectedItem != null)

@@ -28,14 +28,17 @@ namespace GsbMedicament.Vues
 
         GstBdd gst;
 
+        //Générer la liste des individus
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();
             lstTotalTypeIndividu.ItemsSource = gst.getAllIndividu();
         }
 
+        //Bouton de modification des individus
         private void btnModifierIndividu_Click(object sender, RoutedEventArgs e)
         {
+            //S'assurer que les champs recquis sont valables
             if (TxtTypeIndividu.Text == null)
             {
                 MessageBox.Show("Vous devez entrer un individu.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -51,6 +54,7 @@ namespace GsbMedicament.Vues
             }
         }
 
+        //Bouton d'ahout d'un type d'individu
         private void btnAjouterIndividu_Click(object sender, RoutedEventArgs e)
         {
             if (TxtTypeIndividu.Text == null)
@@ -69,8 +73,6 @@ namespace GsbMedicament.Vues
         private void lstTotalTypeIndividu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-        }
-
-        
+        }        
     }
 }

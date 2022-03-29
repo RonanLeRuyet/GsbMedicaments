@@ -28,11 +28,11 @@
         <TextBlock Text="Bienvenue sur la page d'accueil" FontSize="40" FontFamily="Arial" TextAlignment="Center" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,0,0,57"/>
 
 
-        <Button Name="btnGstMedicaments" Click="btnGstMedicaments_Click" Content="Gestion Médicaments" Grid.Column="1" Grid.Row="2"></Button>
-        <Button Name="btnGstIndividu" Content="Gestion Individu" Grid.Column="1" Grid.Row="3" Click="btnGstIndividu_Click"></Button>
-        <Button Name="btnGstPrescription"  Content="GestionPrescription" Grid.Column="1" Grid.Row="4" Click="btnGstPrescription_Click"></Button>
-        <Button Name="btnVoirMedicaments" Content="Voir Medicaments" Grid.Column="1" Grid.Row="5" Click="btnVoirMedicaments_Click"></Button>
-        <Button Name="btnGstPerturbateur" Content="Gestion Perturbateur" Grid.Column="1" Grid.Row="6" Click="btnGstPerturbateur_Click"></Button>
+        <Button Name="btnGstMedicaments" Click="btnGstMedicaments_Click" Content="Gestion des Médicaments" Grid.Column="1" Grid.Row="2"></Button>
+        <Button Name="btnGstIndividu" Content="Gestion des Individus" Grid.Column="1" Grid.Row="3" Click="btnGstIndividu_Click"></Button>
+        <Button Name="btnGstPrescription"  Content="Gestion des Prescriptions" Grid.Column="1" Grid.Row="4" Click="btnGstPrescription_Click"></Button>        
+        <Button Name="btnGstPerturbateur" Content="Gestion des Perturbateurs" Grid.Column="1" Grid.Row="5" Click="btnGstPerturbateur_Click"></Button>
+        <Button Name="btnVoirMedicaments" Content="Voir les Medicaments" Grid.Column="1" Grid.Row="6" Click="btnVoirMedicaments_Click"></Button>
         <Button Name="btnStatistiques" Content="Statistiques" Grid.Column="1" Grid.Row="7" Click="btnStatistiques_Click"></Button>
 
     </Grid>

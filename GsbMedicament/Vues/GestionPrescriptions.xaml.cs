@@ -28,6 +28,9 @@ namespace GsbMedicament.Vues
 
         GstBdd gst;
 
+        //Générer la liste des médicaments
+        //Générer le liste des individus
+        //Générer la liste des dosages
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();
@@ -36,8 +39,10 @@ namespace GsbMedicament.Vues
             lstDosage.ItemsSource = gst.getAllDosage();
         }
 
+        //Bouton d'ajout d'une prescription
         private void btnAjouterPrescription_Click(object sender, RoutedEventArgs e)
         {
+            //S'assurer que les champs recquis sont valables
             if (TxtPosologie.Text == null)
             {
                 MessageBox.Show("Vous devez saisir une posologie.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);

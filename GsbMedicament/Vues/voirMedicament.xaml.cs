@@ -27,6 +27,7 @@ namespace GsbMedicament.Vues
 
         GstBdd gst;
 
+        //Générer la liste des médicaments
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();

@@ -24,20 +24,12 @@ namespace GestionnaireBdd
             string chaine = "Server=localhost;Database=projetmedicamentgsb;Uid=root;Pwd=";
             cnx = new MySqlConnection(chaine);
             cnx.Open();
-        }
+        }        
 
-
-        public void UpdateMedicament(string nomMedicament, int codeFamille, string compoMedicament, string effetsMedicament, string contreIndicMedicament, double prixChantillon)
-        {
-            cmd = new MySqlCommand("UPDATE medicament SET MED_NomCommercial '" + nomMedicament + "', FAM_Code ='" + codeFamille + "', MED_Composition = '" + compoMedicament + "', MED_Effets = '" + effetsMedicament + "', MED_Contreindic = '" + contreIndicMedicament + "', MED_PrixChantillon = '" + prixChantillon + "'  WHERE MED_DepotLegal LIKE '" + nomMedicament + "'", cnx);
-            cmd.ExecuteNonQuery();
-        }
-
-
+        //Afficher tous les médicaments
         public List<Medicament> getAllMedicaments()
         {
             List<Medicament> lesMedicaments = new List<Medicament>();
-
 
             cmd = new MySqlCommand("SELECT medicament.MED_DepotLegal, medicament.MED_NomCommercial, famille.FAM_Libelle, medicament.MED_PrixChantillon, medicament.MED_Composition, medicament.MED_Contreindic, medicament.MED_Effets, medicament.FAM_Code FROM medicament medicament, Famille famille WHERE medicament.FAM_Code = famille.FAM_Code", cnx);
             dr = cmd.ExecuteReader();
@@ -52,8 +44,6 @@ namespace GestionnaireBdd
                 string effets = dr[6].ToString();
                 int famCode = Convert.ToInt16(dr[7]);
 
-
-
                 Famille famille = new Famille(famCode, libelle);
 
                 Medicament unMedicament = new Medicament(depot, nomComm, famille, prixEchantillon, compo, contreIndic, effets);
@@ -62,8 +52,40 @@ namespace GestionnaireBdd
             dr.Close();
             Console.WriteLine("--------------------------" + lesMedicaments);
             return lesMedicaments;
-
         }
+
+        //Modifier un médicament déja existant
+        public void UpdateMedicament(string nomMedicament, int codeFamille, string compoMedicament, string effetsMedicament, string contreIndicMedicament, double prixChantillon)
+        {
+            cmd = new MySqlCommand("UPDATE medicament SET MED_NomCommercial = '" + nomMedicament + "', FAM_Code ='" + codeFamille + "', MED_Composition = '" + compoMedicament + "', MED_Effets = '" + effetsMedicament + "', MED_Contreindic = '" + contreIndicMedicament + "', MED_PrixChantillon = '" + prixChantillon + "'  WHERE MED_NomCommercial = '" + nomMedicament + "'", cnx);
+            cmd.ExecuteNonQuery();
+        }
+
+        //Ajouter unn nouveau médicament à la table
+        public void AjouterMedicament(string nomMedoc, int idFamille, string composition, string effet, string contreIndic, double prix)
+        {
+            int lastId = getLastCodeMedicament();
+            string temp = prix.ToString().Replace(',', '.');
+
+            cmd = new MySqlCommand("INSERT INTO medicament VALUES (" + lastId + ", '" + nomMedoc + "', '" + idFamille + "', '" + composition + "', '" + effet + "', '" + contreIndic + "', '" + temp + "')", cnx);
+            cmd.ExecuteNonQuery();
+            dr.Close();
+        }
+
+        //Recupérer le dernier id de la table médicaments
+        public int getLastCodeMedicament()
+        {
+            int lastId;
+
+            cmd = new MySqlCommand("SELECT Max(MED_DepotLegal) FROM medicament", cnx);
+            dr = cmd.ExecuteReader();
+            dr.Read();
+            lastId = Convert.ToInt16(dr[0].ToString());
+            dr.Close();
+            return lastId + 1;
+        }
+
+        //Afficher tous les types d'individu
         public List<TypeIndividu> getAllIndividu()
         {
             List<TypeIndividu> lesIndividus = new List<TypeIndividu>();
@@ -78,36 +100,15 @@ namespace GestionnaireBdd
             dr.Close();
             return lesIndividus;
         }
+
+        //Modifier un type d'individu déjà existant
         public void UpdateIndividu(int codeTypeIndividu, string libelleTypeIndividu)
         {
             cmd = new MySqlCommand("UPDATE type_individu SET TIN_Libelle = " + "'" + libelleTypeIndividu + "' WHERE TIN_Code = " + codeTypeIndividu, cnx);
             cmd.ExecuteNonQuery();
-        }
+        }        
 
-
-        public int getLastCodeMedicament()
-        {
-            int lastId;
-
-            cmd = new MySqlCommand("SELECT Max(MED_DepotLegal) FROM medicament", cnx);
-            dr = cmd.ExecuteReader();
-            dr.Read();
-            lastId = Convert.ToInt16(dr[0].ToString());
-            dr.Close();
-            return lastId + 1;
-        }
-
-        public void AjouterMedicament(string nomMedoc, int idFamille, string composition, string effet, string contreIndic, double prix)
-        {
-            
-            int lastId = getLastCodeMedicament();
-            string temp = prix.ToString().Replace(',', '.');
-
-            cmd = new MySqlCommand("INSERT INTO medicament VALUES (" + lastId + ", '" + nomMedoc + "', '" + idFamille + "', '" + composition + "', '" + effet + "', '" + contreIndic + "', '" + temp + "')", cnx);
-            cmd.ExecuteNonQuery();
-            dr.Close();
-        }
-
+        //Récupérer le dernier id de la table type d'individu
         public int getLastCodeIndividu()
         {
             int lastId;
@@ -119,6 +120,7 @@ namespace GestionnaireBdd
             return lastId + 1;
         }
 
+        //Ajouter un nouveau type d'individu à la table
         public void Ajouterindividu(int TIN_CODE, string libelleTypeIndividu)
         {
             int lastId = getLastCodeIndividu();
@@ -129,24 +131,17 @@ namespace GestionnaireBdd
             dr.Close();
         }
 
-        public void AjouterPrescription(int depotMedicament, string codeTypeIndividu, string codeDosage)
-        {
-            cmd = new MySqlCommand("INSERT INTO prescrire (MED_DepotLegal,TIN_Code,DOS_Code) VALUES (" + depotMedicament + "," + codeTypeIndividu + codeDosage + ")", cnx);
-            cmd.ExecuteNonQuery();
-
-            dr.Close();
-        }
-
+        //Définir un médicament comme étant perturbateur d'un autre
         public void AjouterMedicamentPertub(int MedicamentPertubateur, int MedicamentPertub)
         {
             cmd = new MySqlCommand("INSERT INTO  interagir (MED_Perturbateur, MED_MED_Perturbe) VALUES(" + MedicamentPertubateur + "," + MedicamentPertub + ")", cnx);
             cmd.ExecuteNonQuery();
         }
 
+        //Afficher tous les médicaments perturbateurs d'un autre
         public List<Medicament> GetMedicamentPertub(int depotLegal)
         {
             List<Medicament> mesMedicamentsPertub = new List<Medicament>();
-
 
             cmd = new MySqlCommand("SELECT MED_Perturbateur, MED_NomCommercial, famille.FAM_libelle, MED_Composition, MED_Effets, MED_Contreindic, MED_PrixChantillon, famille.FAM_Code FROM medicament INNER JOIN famille ON famille.FAM_code = medicament.FAM_Code INNER JOIN interagir ON medicament.MED_DepotLegal = interagir.MED_Perturbateur WHERE interagir.MED_MED_Perturbe = " + depotLegal, cnx);
             dr = cmd.ExecuteReader();
@@ -164,6 +159,7 @@ namespace GestionnaireBdd
             return mesMedicamentsPertub;
         }
 
+        //Définir tous les médicaments non perturbateurs d'unn autre
         public List<Medicament> GetMedicamentNonPertub(int depotLegal)
         {
             List<Medicament> mesMedicamentsNonPertub = new List<Medicament>();
@@ -185,12 +181,14 @@ namespace GestionnaireBdd
             return mesMedicamentsNonPertub;
         }
 
+        //Ajouter un prescription dans la table
         public void AjouterPrescription(int codeMedicament, int codeIndividu, int codeDosage, string posologie)
         {
             cmd = new MySqlCommand("INSERT INTO prescrire(MED_DepotLegal, TIN_Code, DOS_Code, PRE_Posologie) VALUES (" + codeMedicament + ", " + codeIndividu + ", " + codeDosage + ", '" + posologie + "')", cnx);
             cmd.ExecuteNonQuery();
         }
 
+        //Afficher tous les dosages
         public List<Dosage> getAllDosage()
         {
             List<Dosage> allDosage = new List<Dosage>();
@@ -207,6 +205,7 @@ namespace GestionnaireBdd
             return allDosage;
         }
 
+        //Afficher toutes les familles
         public List<Famille> getAllFamille()
         {
             List<Famille> allFamille = new List<Famille>();
@@ -221,6 +220,7 @@ namespace GestionnaireBdd
             return allFamille;
         }
 
+        //Premier graphique
         public Dictionary<string, int> GetDatasGraph1()
         {
             Dictionary<string, int> lesDatas = new Dictionary<string, int>();
@@ -236,6 +236,7 @@ namespace GestionnaireBdd
             return lesDatas;
         }
 
+        //Second graphique
         public Dictionary<string, int> GetDatasGraph2()
         {
             Dictionary<string, int> lesDatas = new Dictionary<string, int>();

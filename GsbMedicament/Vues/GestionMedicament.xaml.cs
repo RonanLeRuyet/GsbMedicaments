@@ -28,6 +28,8 @@ namespace GsbMedicament.Vues
 
         GstBdd gst;
 
+        //Générer la liste des médicaments
+        //Générer la liste des familles
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();
@@ -35,8 +37,10 @@ namespace GsbMedicament.Vues
             lstGetFamille.ItemsSource = gst.getAllFamille();
         }
 
+        //Bouton de modification des médicaments
         private void btnModifierMedicament_Click(object sender, RoutedEventArgs e)
         {
+            //S'assurer que les champs recquis sont valables
             if (TxtNom.Text == null)
             {
                 MessageBox.Show("Vous devez entrer un nom.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -78,8 +82,10 @@ namespace GsbMedicament.Vues
             }
         }
 
+        //Bouton d'ajout d'un médicament
         private void btnAjouterMedicament_Click(object sender, RoutedEventArgs e)
         {
+            //S'assurer que les champs recquis sont valables
             if (TxtNom.Text == null)
             {
                 MessageBox.Show("Vous devez entrer un nom.", "Erreur de saisie", MessageBoxButton.OK, MessageBoxImage.Error);

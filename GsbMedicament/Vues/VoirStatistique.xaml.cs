@@ -32,13 +32,12 @@ namespace GsbMedicament.Vues
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             gst = new GstBdd();
-            //cboMedicaments.ItemsSource = gst.getAllMedicaments();
 
+
+            //Graphe 1
             PieSeries ps;
             ChartValues<int> line;
-
             Dictionary<string, int> lesDatas = new Dictionary<string, int>();
-
             lesDatas = gst.GetDatasGraph2();
 
             foreach (string cle in lesDatas.Keys)
@@ -53,26 +52,19 @@ namespace GsbMedicament.Vues
             }
             monGraph2.LegendLocation = LegendLocation.Bottom;
 
-
-
-
-
+            //Graphe 2
             ColumnSeries cs = new ColumnSeries();
             cs.Fill = Brushes.Red;
             ChartValues<double> line2 = new ChartValues<double>();
-
             Dictionary<string, int> lesDatas2 = new Dictionary<string, int>();
             lesDatas2 = gst.GetDatasGraph1();
-
-            //lesDatas = gst.GetDatasGraph1((cboActions.SelectedItem as MetierTrader.Action).NomAction);
 
             foreach (string cle in lesDatas2.Keys)
             {
                 line2.Add(lesDatas2[cle]);
-
             }
-            cs.Values = line2;
 
+            cs.Values = line2;
             monGraph1.Series.Clear();
             monGraph1.AxisX.Clear();
             Axis axe = new Axis();
@@ -81,35 +73,6 @@ namespace GsbMedicament.Vues
             monGraph1.Series.Add(cs);
             cs.Title = "Nombre de perturbateurs";
             cs.DataLabels = true;
-            monGraph1.LegendLocation = LegendLocation.Top;
-
-        }
-
-        private void cboMedicaments_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ColumnSeries cs = new ColumnSeries();
-            cs.Fill = Brushes.Red;
-            ChartValues<double> line = new ChartValues<double>();
-
-            Dictionary<string, double> lesDatas = new Dictionary<string, double>();
-
-            //lesDatas = gst.GetDatasGraph1((cboActions.SelectedItem as MetierTrader.Action).NomAction);
-
-            foreach (string cle in lesDatas.Keys)
-            {
-                line.Add(lesDatas[cle]);
-            }
-            cs.Values = line;
-
-            monGraph1.Series.Clear();
-            monGraph1.AxisX.Clear();
-            Axis axe = new Axis();
-            axe.Labels = lesDatas.Keys.ToList();
-            monGraph1.AxisX.Add(axe);
-            monGraph1.Series.Add(cs);
-            cs.Title = "Prix d'achat";
-            cs.DataLabels = true;
-
             monGraph1.LegendLocation = LegendLocation.Top;
         }
     }
