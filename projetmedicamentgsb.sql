@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 28 mars 2022 à 22:17
+-- Généré le : mar. 29 mars 2022 à 16:00
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.4.9
 
@@ -148,7 +148,7 @@ INSERT INTO `medicament` (`MED_DepotLegal`, `MED_NomCommercial`, `FAM_Code`, `ME
 (10, 'Xanax', 5, 'Alprazolam', 'Manifestation anxieuse sévère et/ou invalidante', 'Insuffisance respiratoire sévère', 9.62),
 (11, 'Aerius', 6, 'Desloratadine', 'Traitre la rhinite allergique et l\'urticaire', 'Enfants de moins de 6 ans, Femmes enceintes', 4.99),
 (12, 'Eudril', 1, 'Chlorhexidine digluconate	', 'Réduit le mal de gorge', 'Enfant de moins de 12 ans', 2),
-(18, 'Smecta', 3, 'Poudre', 'Contre l adiaré', 'null', 2);
+(18, 'Smecta', 3, 'Poudre', 'Contre la diarhé', 'null', 12);
 
 -- --------------------------------------------------------
 
