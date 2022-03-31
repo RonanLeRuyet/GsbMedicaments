@@ -77,7 +77,7 @@ namespace GsbMedicament.Vues
 
                 gst.UpdateMedicament(nom, famille, compo, effets, contreIndic, prix);
                 lstAllMedicaments.ItemsSource = gst.getAllMedicaments();
-
+               
                 MessageBox.Show("Le médicament a bien été modifié.");
             }
         }

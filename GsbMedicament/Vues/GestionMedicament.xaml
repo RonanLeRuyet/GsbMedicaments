@@ -42,6 +42,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding DepotMedicament}" Width="50"></TextBlock>
                         <TextBlock Text="{Binding NomMedicament}" Width="100"></TextBlock>
+                        <TextBlock Text="{Binding PrixChantillon}" Width="50"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

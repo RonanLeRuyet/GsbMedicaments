@@ -31,7 +31,7 @@ namespace GestionnaireBdd
         {
             List<Medicament> lesMedicaments = new List<Medicament>();
 
-            cmd = new MySqlCommand("SELECT medicament.MED_DepotLegal, medicament.MED_NomCommercial, famille.FAM_Libelle, medicament.MED_PrixChantillon, medicament.MED_Composition, medicament.MED_Contreindic, medicament.MED_Effets, medicament.FAM_Code FROM medicament medicament, Famille famille WHERE medicament.FAM_Code = famille.FAM_Code", cnx);
+            cmd = new MySqlCommand("SELECT medicament.MED_DepotLegal, medicament.MED_NomCommercial, famille.FAM_Libelle, medicament.MED_PrixChantillon, medicament.MED_Composition, medicament.MED_Contreindic, medicament.MED_Effets, medicament.FAM_Code FROM medicament medicament, Famille famille WHERE medicament.FAM_Code = famille.FAM_Code ORDER BY medicament.MED_DepotLegal ASC", cnx);
             dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -148,7 +148,7 @@ namespace GestionnaireBdd
             while (dr.Read())
             {
                 int famCode = 0;
-                string famLibelle = dr[2].ToString();                   
+                string famLibelle = dr[2].ToString();
                 famCode = Convert.ToInt32(dr[7]);
                 
                 Famille famille = new Famille(famCode, famLibelle);
@@ -165,7 +165,8 @@ namespace GestionnaireBdd
             List<Medicament> mesMedicamentsNonPertub = new List<Medicament>();
             int famCode = 0;
 
-            cmd = new MySqlCommand("SELECT MED_DepotLegal, MED_NomCommercial,  famille.FAM_libelle, MED_Composition,  MED_Effets, MED_Contreindic, MED_PrixChantillon, famille.FAM_Code FROM medicament INNER JOIN famille ON famille.FAM_code = medicament.FAM_Code where  MED_DepotLegal not in (SELECT MED_Perturbateur FROM interagir inner join medicament on interagir.MED_MED_Perturbe = medicament.MED_DepotLegal where MED_DepotLegal=" + depotLegal + ")", cnx);
+            cmd = new MySqlCommand("SELECT MED_DepotLegal, MED_NomCommercial,  famille.FAM_libelle, MED_Composition,  MED_Effets, MED_Contreindic, MED_PrixChantillon, famille.FAM_Code FROM medicament INNER JOIN famille ON famille.FAM_code = medicament.FAM_Code where MED_DepotLegal not in (SELECT MED_Perturbateur FROM interagir inner join medicament on interagir.MED_MED_Perturbe = medicament.MED_DepotLegal where MED_DepotLegal=" + depotLegal + ")", cnx);
+            //cmd = new MySqlCommand("SELECT MED_DepotLegal, MED_NomCommercial,  famille.FAM_libelle, MED_Composition,  MED_Effets, MED_Contreindic, MED_PrixChantillon, famille.FAM_Code FROM medicament INNER JOIN famille ON famille.FAM_code = medicament.FAM_Code where MED_DepotLegal != " + depotLegal + " AND MED_DepotLegal not in (SELECT MED_Perturbateur FROM interagir inner join medicament on interagir.MED_MED_Perturbe = medicament.MED_DepotLegal where MED_DepotLegal=" + depotLegal + ")", cnx);
             dr = cmd.ExecuteReader();
 
             while (dr.Read())

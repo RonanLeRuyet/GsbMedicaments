@@ -72,7 +72,16 @@ namespace GsbMedicament.Vues
 
         private void lstTotalTypeIndividu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //if (lstTotalTypeIndividu.SelectedItem != null)
+            //{
+            //    string libelleTI = (lstTotalTypeIndividu.SelectedItem as TypeIndividu).LibelleTypeIndividu;
+            //    TxtTypeIndividu.Text = libelleTI;
+            //}
+        }
 
-        }        
+        private void TxtTypeIndividu_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
